@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net5</TargetFramework>
+		<MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+		<ContentTargetFolders>content</ContentTargetFolders>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<!-- Package Description-->
+	<PropertyGroup>
+		<PackageId>Dragonfly.Umbraco9SiteAuditor</PackageId>
+		<Title>Dragonfly Umbraco 9 Site Auditor</Title>
+		<Product>Dragonfly Umbraco 9 Site Auditor</Product>
+		<Description>A collection of tools to extract data about an Umbraco 9 site. (min. Umbraco 9.3.0)</Description>
+
+		<PackageProjectUrl>https://github.com/hfloyd/Dragonfly.Umbraco9SiteAuditor</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/hfloyd/Dragonfly.Umbraco9SiteAuditor</RepositoryUrl>
+
+		<PackageTags>Umbraco 9</PackageTags>
+		<PackageReleaseNotes>First release</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<!-- Author Info-->
+	<PropertyGroup>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Copyright>Heather Floyd [www.HeatherFloyd.com]</Copyright>
+		<RepositoryType>GIT</RepositoryType>
+		<Authors>Heather Floyd</Authors>
+		<Company></Company>
+	</PropertyGroup>
+
+	<!-- Assembly Info-->
+	<PropertyGroup>
+		<RootNamespace>Dragonfly</RootNamespace>
+		<AssemblyName>Dragonfly.UmbracoSiteAuditor</AssemblyName>
+		<Version>0.0.17</Version>
+		<AssemblyVersion>$(Version)</AssemblyVersion>
+		<FileVersion>$(Version)</FileVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\LICENSE.md">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<!-- Packages-->
+	<ItemGroup>
+		<PackageReference Include="Dragonfly.Net5" Version="1.1.0">
+			<TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
+		<PackageReference Include="Dragonfly.Umbraco9" Version="1.0.7">
+			<TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="9.3.0" PrivateAssets="All">
+			<TreatAsUsed>true</TreatAsUsed>
+		</PackageReference>
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.3.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<!--Include App_Plugins & targets file-->
+	<ItemGroup>
+		<Content Include="App_Plugins\Dragonfly.SiteAuditor\**\*.*">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<Pack>True</Pack>
+		</Content>
+		<None Include="build\**\*.*">
+			<Pack>True</Pack>
+			<PackagePath>buildTransitive</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<Import Project="..\Custom.targets" />
+
+	<!-- Excluded Files -->
+	<ItemGroup>
+		<Compile Remove="SiteAuditor\Helpers\AuditHelper.cs" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;\bin\&quot;&#xD;&#xA;REM XCOPY /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;XXX\bin\&quot;" />
+	</Target>
+</Project>
