@@ -1,3 +1,4 @@
+
 @inherits UmbracoViewPage<IEnumerable<AuditableContent>>
 @*
 	Expected View Data:
@@ -58,6 +59,8 @@
 					<th>Assigned Template</th>
 					<th>Create Date</th>
 					<th>Update Date</th>
+					<th>Create User</th>
+					<th>Update User</th>
 					<th>UDI</th>
 				</tr>
 			</thead>
@@ -134,7 +137,11 @@
 								Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/RazorViews/DataFormats/DateValue.cshtml", node.UmbContentNode.UpdateDate);
 							}
 						</td>
-
+						@* //Create User *@
+						<td>@node.UmbContentNode.CreatorId</td>
+						@* //Update User *@
+						<td>@node.UmbContentNode.WriterId</td>
+						
 						@* //Node UDI*@
 						<td><small>@node.UmbContentNode.GetUdi()</small></td>
 					</tr>
@@ -155,6 +162,8 @@
 					<th>Template</th>
 					<td>Created</td>
 					<td>Updated</td>
+					<th>C.User</th>
+					<th>U.User</th>
 					<td>UDI</td>
 				</tr>
 			</tfoot>

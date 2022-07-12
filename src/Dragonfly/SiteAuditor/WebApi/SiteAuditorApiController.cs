@@ -6,11 +6,7 @@
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
-    using Dragonfly.NetHelperServices;
-    using Dragonfly.NetModels;
-    using Dragonfly.SiteAuditor.Models;
-    using Dragonfly.SiteAuditor.Services;
-    using Dragonfly.UmbracoHelpers;
+
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.Extensions.Logging;
@@ -23,6 +19,12 @@
     using Umbraco.Cms.Web.Common.Attributes;
     using Umbraco.Extensions;
 
+    using Dragonfly.NetHelperServices;
+    using Dragonfly.NetModels;
+    using Dragonfly.UmbracoHelpers;
+
+    using Dragonfly.SiteAuditor.Models;
+    using Dragonfly.SiteAuditor.Services;
     //  /umbraco/backoffice/Dragonfly/SiteAuditor/
     [PluginController("Dragonfly")]
     [IsBackOffice]

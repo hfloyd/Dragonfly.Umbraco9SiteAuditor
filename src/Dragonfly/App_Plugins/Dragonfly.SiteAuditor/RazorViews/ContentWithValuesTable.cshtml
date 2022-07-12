@@ -111,7 +111,12 @@
 						}
 
 						@*//Value Length*@
-						<td>@dtInfo.PropertyData.ToString().Length</td>
+						<td>@if(node.UmbContentNode.HasPropertyValue(propertyAlias) & dtInfo.PropertyData!=null)
+						    { @dtInfo.PropertyData.ToString().Length }
+						    else
+						    {
+							    <text>0</text>
+						    }</td>
 						
 
 						@*//Has Value*@

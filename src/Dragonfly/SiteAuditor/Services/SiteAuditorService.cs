@@ -42,6 +42,9 @@
 
         private IEnumerable<IContent> _AllContent = new List<IContent>();
 
+        /// <summary>
+        /// Use .GetAllCompositions() to return this list
+        /// </summary>
         private IEnumerable<IContentTypeComposition> _AllContentTypeComps = new List<IContentType>();
 
         internal static string DataPath()
@@ -73,10 +76,11 @@
             internal set { _defaultDelimiter = value; }
         }
         private string _defaultDelimiter = " » ";
-        #endregion
-
+    
+   #endregion
 
         #region ctor
+
         public SiteAuditorService(DependencyLoader dependencies, ILogger<SiteAuditorService> logger, AuditorInfoService auditorInfoService)
         {
             //Services
@@ -459,7 +463,10 @@
 
             return list;
         }
-
+        /// <summary>
+        /// Gets list of all DocTypes on site as IContentType models (uses saved list, if available)
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IContentTypeComposition> GetAllCompositions()
         {
             if (_AllContentTypeComps.Any())
@@ -533,7 +540,7 @@
             adt.CompositionsUsed = hasComps;
 
             var allCompsIds = GetAllCompositions().Select(n => n.Id);
-
+            
             adt.IsComposition = allCompsIds.Contains(ContentType.Id);
 
             adt.HasContentNodes = _services.ContentTypeService.HasContentNodes(ContentType.Id);
