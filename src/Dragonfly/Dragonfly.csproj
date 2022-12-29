@@ -10,20 +10,21 @@
 	<PropertyGroup>
 		<PackageId>Dragonfly.Umbraco9SiteAuditor</PackageId>
 		<Title>Dragonfly Umbraco 9 Site Auditor</Title>
-		<Product>Dragonfly Umbraco 9/10 Site Auditor</Product>
+		<Product>Dragonfly Umbraco 9 Site Auditor</Product>
 		<Description>A collection of tools to extract data about an Umbraco 9 or 10 site. (min. Umbraco 9.3.0)</Description>
 
-		<PackageProjectUrl>https://github.com/hfloyd/Dragonfly.Umbraco9SiteAuditor</PackageProjectUrl>
+		<PackageProjectUrl>https://DragonflyLibraries.com/umbraco-packages/site-auditor/</PackageProjectUrl>
 		<RepositoryType>GIT</RepositoryType>
 		<RepositoryUrl>https://github.com/hfloyd/Dragonfly.Umbraco9SiteAuditor</RepositoryUrl>
 
-		<PackageTags>Umbraco 9; Umbraco 10</PackageTags>
+		<PackageIcon>Dragonfly-SiteAuditor-128.png</PackageIcon>
+		<PackageTags>Umbraco;Umbraco-9;umbraco-marketplace</PackageTags>
 		<PackageReleaseNotes>First release</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<!-- Author Info + Legal-->
 	<PropertyGroup>
-		<Authors>Heather Floyd</Authors>
+		<Authors>HFloyd</Authors>
 		<Company></Company>
 		<Copyright>Heather Floyd [www.HeatherFloyd.com]</Copyright>
 
@@ -36,12 +37,17 @@
 	<PropertyGroup>
 		<RootNamespace>Dragonfly</RootNamespace>
 		<AssemblyName>Dragonfly.UmbracoSiteAuditor</AssemblyName>
-		<Version>0.0.21</Version>
+		<Version>1.0.0</Version>
 		<AssemblyVersion>$(Version)</AssemblyVersion>
 		<FileVersion>$(Version)</FileVersion>
 	</PropertyGroup>
 
+  <!-- Include Package Items -->
 	<ItemGroup>
+    <None Include="..\..\Dragonfly-SiteAuditor-128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
 		<None Include="..\..\LICENSE.md">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
@@ -54,19 +60,24 @@
 
 	<!-- Packages-->
 	<ItemGroup>
-		<PackageReference Include="Dragonfly.Net5" Version="1.1.0">
-			<TreatAsUsed>true</TreatAsUsed>
-		</PackageReference>
-		<PackageReference Include="Dragonfly.Umbraco9" Version="1.0.7">
-			<TreatAsUsed>true</TreatAsUsed>
-		</PackageReference>
-		<PackageReference Include="Umbraco.Cms.Core" Version="9.3.0" PrivateAssets="All" />
-		<PackageReference Include="Umbraco.Cms.Web.Website" Version="9.3.0" PrivateAssets="All">
-			<TreatAsUsed>true</TreatAsUsed>
-		</PackageReference>
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.3.0" PrivateAssets="All" />
+		<PackageReference Include="Dragonfly.Net5" Version="1.1.0" />
+		<PackageReference Include="Dragonfly.Umbraco9" Version="1.0.7" />
+		<PackageReference Include="Umbraco.Cms.Core" Version="[9.3.0,10.0.0]" />
+		<PackageReference Include="Umbraco.Cms.Web.Website" Version="[9.3.0,10.0.0]" PrivateAssets="All" />
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="[9.3.0,10.0.0]" PrivateAssets="All" />
 	</ItemGroup>
-
+	
+	<!-- Included/Excluded Files -->
+	<ItemGroup>
+		<Compile Remove="SiteAuditor\Helpers\AuditHelper.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
+	</ItemGroup>
+	
 	<!--Include App_Plugins & targets file-->
 	<ItemGroup>
 		<Content Include="App_Plugins\Dragonfly.SiteAuditor\**\*.*">
@@ -82,18 +93,8 @@
 
 	<Import Project="..\Custom.targets" />
 
-	<!-- Excluded Files -->
-	<ItemGroup>
-		<Compile Remove="SiteAuditor\Helpers\AuditHelper.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="App_Plugins\Dragonfly.SiteAuditor\RazorViews\DataFormats\xxMediaImage.cshtml" />
-	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<Exec Command="XCOPY /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\HeatherFloyd.com\sourcecode\src\UmbracoProject\bin\Debug\net6.0&quot;&#xD;&#xA;REM XCOPY /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;XXX\bin\&quot;" />
+    <Exec Command="REM XCOPY /s /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;\bin\&quot;&#xD;&#xA;REM XCOPY /y &quot;$(TargetDir)$(TargetName)*.*&quot; &quot;XXX\bin\&quot;" />
 	</Target>
 </Project>
